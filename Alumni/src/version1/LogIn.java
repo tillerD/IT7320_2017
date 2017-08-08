@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 public class LogIn extends JFrame {
 	private JTextField textUsername;
 	private JTextField textPassword;
+	private boolean admin;	
 	public LogIn() {
 		setTitle("WelTec Alumni");
 		getContentPane().setLayout(null);
@@ -37,7 +38,9 @@ public class LogIn extends JFrame {
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				View viewScreen = new View();
+				String text = textUsername.getText();
+				
+				View viewScreen = new View(admin);
 				viewScreen.setVisible(true);
 				dispose();
 			}

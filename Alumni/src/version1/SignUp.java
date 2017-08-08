@@ -15,6 +15,7 @@ public class SignUp extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	private boolean admin;
 	public SignUp() {
 		setTitle("WelTec Alumni");
 		getContentPane().setLayout(null);
@@ -77,7 +78,7 @@ public class SignUp extends JFrame {
 		btnSignUp.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				View viewScreen = new View();
+				View viewScreen = new View(admin);
 				viewScreen.setVisible(true);
 				dispose();
 			}

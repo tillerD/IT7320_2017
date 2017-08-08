@@ -13,6 +13,7 @@ public class Edit extends JFrame {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
+	private boolean admin;
 	public Edit() {
 		setTitle("WelTec Alumni");
 		getContentPane().setLayout(null);
@@ -65,7 +66,7 @@ public class Edit extends JFrame {
 		btnUpdate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				View viewScreen = new View();
+				View viewScreen = new View(admin);
 				viewScreen.setVisible(true);
 				dispose();
 			}
