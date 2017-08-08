@@ -6,6 +6,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Dimension;
 
 @SuppressWarnings("serial")
 public class SignUp extends JFrame {
@@ -17,6 +18,7 @@ public class SignUp extends JFrame {
 	private JTextField textField_5;
 	private boolean admin;
 	public SignUp() {
+		setMinimumSize(new Dimension(320, 235));
 		setTitle("WelTec Alumni");
 		getContentPane().setLayout(null);
 		

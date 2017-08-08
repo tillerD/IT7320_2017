@@ -6,6 +6,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Dimension;
 
 @SuppressWarnings("serial")
 public class LogIn extends JFrame {
@@ -13,6 +14,7 @@ public class LogIn extends JFrame {
 	private JTextField textPassword;
 	private boolean admin;	
 	public LogIn() {
+		setMinimumSize(new Dimension(315, 160));
 		setTitle("WelTec Alumni");
 		getContentPane().setLayout(null);
 		
@@ -39,7 +41,6 @@ public class LogIn extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				String text = textUsername.getText();
-				
 				View viewScreen = new View(admin);
 				viewScreen.setVisible(true);
 				dispose();
