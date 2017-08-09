@@ -103,8 +103,8 @@ public class LogIn extends JFrame {
 		
 
 	}
-	
-	public void main(String args[])
+
+	public static void main(String args[])
 	{
 		LogIn loginScreen = new LogIn();
 		loginScreen.setVisible(true);
