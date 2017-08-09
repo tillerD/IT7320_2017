@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,7 +25,8 @@ public class Edit extends JFrame {
 	private static final String USER = "AlumniAdmin";
 	private static final String PASSWORD = "WelTec123";
 	private boolean constraintsBool = true;
-	public Edit(String firstName, String lastName, String email ) {
+	
+	public Edit(String firstName, String lastName, String id, String email ) {
 		setMinimumSize(new Dimension(450, 300));
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 11));
 		setTitle("WelTec Alumni");
@@ -176,7 +181,15 @@ public class Edit extends JFrame {
 					constraintsBool = true;
 					btnUpdate.setEnabled(true);
 				} else {
-					View viewScreen = new View();
+				/*	String query = "UPDATE students "
+							+ "SET firstname = textField_FN.getText(), lastname = textField_LN.getText(), email = textField_Email.getText() "
+							+ "WHERE studentid = id";
+					Connection connection = null;
+						connection = DriverManager.getConnection(URL, USER, PASSWORD);
+						Statement statement = connection.createStatement();
+						statement.executeQuery(query);*/
+							
+					View viewScreen = new View(false);
 					viewScreen.setVisible(true);
 					dispose();
 				}
