@@ -77,6 +77,9 @@ public class View extends JFrame {
 								PersonInfo info = new PersonInfo();
 								info.setIdStudent(rs.getInt("idStudents"));
 								info.setFirstName(rs.getString("firstname"));
+								info.setLastName(rs.getString("lastname"));
+								info.setId(rs.getInt("StudentID"));
+								info.setEmail(rs.getString("email"));
 							}
 						} catch (SQLException e1) {
 							//TODO Auto-generated catch block
@@ -107,12 +110,7 @@ public class View extends JFrame {
 		btnEditMyDetails.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				try {
-					Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}				
+				
 			}
 		});
 		btnEditMyDetails.setBounds(10, 465, 111, 23);

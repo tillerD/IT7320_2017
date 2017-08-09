@@ -174,7 +174,7 @@ public class Edit extends JFrame {
 					constraintsBool = true;
 					btnUpdate.setEnabled(true);
 				} else {
-					View viewScreen = new View();
+					View viewScreen = new View(true);
 					viewScreen.setVisible(true);
 					dispose();
 				}
