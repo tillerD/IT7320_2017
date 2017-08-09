@@ -4,6 +4,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,9 +22,12 @@ public class Edit extends JFrame {
 	private JTextField textField_LN;
 	private JTextField textField_Email;
 	private JTextField textField_CheckEmail;
-	//Boolean for checking is all fields have passed the constraints
+	private static final String URL = "127.0.0.1";
+	private static final String USER = "AlumniAdmin";
+	private static final String PASSWORD = "WelTec123";
 	private boolean constraintsBool = true;
-	public Edit(String firstName, String lastName, String email ) {
+	
+	public Edit(String firstName, String lastName, String id, String email ) {
 		setMinimumSize(new Dimension(450, 300));
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 11));
 		setTitle("WelTec Alumni");
@@ -174,7 +182,22 @@ public class Edit extends JFrame {
 					constraintsBool = true;
 					btnUpdate.setEnabled(true);
 				} else {
-					View viewScreen = new View(true);
+//<<<<<<< HEAD
+					//View viewScreen = new View(true);
+//=======
+					String query = "UPDATE alumnischema.students SET firstName = " + textField_FN.getText() + ", LastName = " + textField_LN.getText() + ", Email = " + textField_Email.getText() + " WHERE StudentID = id";
+					Connection connection = null;
+					try {
+						connection = DriverManager.getConnection(URL, USER, PASSWORD);
+						Statement statement = connection.createStatement();
+						statement.executeQuery(query);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+							
+					View viewScreen = new View(false);
+//>>>>>>> branch 'master' of https://github.com/tillerD/IT7320_2017.git
 					viewScreen.setVisible(true);
 					dispose();
 				}
