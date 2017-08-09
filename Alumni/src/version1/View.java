@@ -20,9 +20,9 @@ public class View extends JFrame {
 	private JTextField idField;
 	private JTextField summary;
 	private boolean admin;
-	private static final String URL = "url";
-	private static final String USER = "url";
-	private static final String PASSWORD = "url";
+	private static final String URL = "127.0.0.1";
+	private static final String USER = "AlumniAdmin";
+	private static final String PASSWORD = "WelTec123";
 	public View(boolean role) {
 		this.admin = role;
 		
@@ -58,37 +58,45 @@ public class View extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String name = nameField.getText();
-				String id = idField.getText();
-				if(fieldChecker(name) && fieldChecker(id))
+				String[] splited = name.split("\\s+");
+				if(splited.length == 2)
 				{
-					String query = "SELECT * FROM table WHERE id = " + id + " OR name = " + name;
-					Connection connection = null;
-					try {
-						connection = DriverManager.getConnection(URL, USER, PASSWORD);
-						Statement statement = connection.createStatement();
-						ResultSet rs = statement.executeQuery(query);
-						if(rs.next())
-						{
-							PersonInfo info = new PersonInfo();
-						}
-					} catch (SQLException e1) {
-						// 	TODO Auto-generated catch block
-						e1.printStackTrace();
-					} finally {
-						if (connection != null) {
-							try {
-								connection.close();
-							} catch (SQLException e1) {
-								e1.printStackTrace();
+					String fName = splited[0];
+					String lName = splited[1];
+					String id = idField.getText();
+					if(fieldChecker(fName) && fieldChecker(lName) && fieldChecker(id))
+					{
+						String query = "SELECT * FROM students WHERE studentid = " + id + " AND firstname = " + fName + " AND lastname = " + lName;
+						Connection connection = null;
+						try {
+							connection = DriverManager.getConnection(URL, USER, PASSWORD);
+							Statement statement = connection.createStatement();
+							ResultSet rs = statement.executeQuery(query);
+							if(rs.next())
+							{
+								PersonInfo info = new PersonInfo();
+								info.setIdStudent(rs.getInt("idStudents"));
+								info.setFirstName(rs.getString("firstname"));
+							}
+						} catch (SQLException e1) {
+							//TODO Auto-generated catch block
+							e1.printStackTrace();
+						} finally {
+							if (connection != null) {
+								try {
+									connection.close();
+								} catch (SQLException e1) {
+									e1.printStackTrace();
+								}
 							}
 						}
 					}
-				}
-				else
-				{
-					nameField.setText("");
-					idField.setText("");
-					JOptionPane.showMessageDialog(new JFrame(), "Invalid input!", "Dialog", JOptionPane.ERROR_MESSAGE);
+					else
+					{
+						nameField.setText("");
+						idField.setText("");
+						JOptionPane.showMessageDialog(new JFrame(), "Invalid input!", "Dialog", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 		});

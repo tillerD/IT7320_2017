@@ -1,6 +1,7 @@
 package version1;
 
 public class PersonInfo {
+	private int idStudent;
 	private String firstName;
 	private String lastName;
 	private String id;
@@ -8,12 +9,20 @@ public class PersonInfo {
 	
 	public PersonInfo()
 	{
+		idStudent = 0;
 		firstName = null;
 		lastName = null;
 		id = null;
 		email = null;
 	}
 	
+	public int getIdStudent() {
+		return idStudent;
+	}
+	public void setIdStudent(int idStudent) {
+		this.idStudent = idStudent;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
