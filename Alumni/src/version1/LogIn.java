@@ -6,21 +6,20 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Color;
+import java.sql.*;
+import javax.sql.*;
 
 @SuppressWarnings("serial")
 public class LogIn extends JFrame {
 	private JTextField textUsername;
 	private JTextField textPassword;
 	private boolean admin;
-	private static final String URL = "127.0.0.1";
+	private static final String URL = "jdbc:mysql//localhost:3306";
+	private static final String USER = "AlumniAdmin";
+	private static final String PASSWORD = "WelTec123";
 	public LogIn() {
 		setMinimumSize(new Dimension(315, 160));
 		setTitle("WelTec Alumni");
@@ -56,11 +55,10 @@ public class LogIn extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				String user = textUsername.getText();
 				String password = textPassword.getText();
-				
 				String query = "SELECT admin FROM alumnischema.students WHERE username = " + user + " password = " + password;
 				Connection connection = null;
 				try {
-					connection = DriverManager.getConnection(URL, user, password);
+					connection = DriverManager.getConnection(URL, USER, PASSWORD);
 					Statement statement = connection.createStatement();
 					ResultSet result = statement.executeQuery(query);
 					if(result.next())
@@ -78,12 +76,17 @@ public class LogIn extends JFrame {
 					{
 						label_login.setText("Username or password is incorrect");
 					}
+					statement.close();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
-
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		btnLogin.setBounds(83, 76, 89, 23);
