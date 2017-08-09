@@ -185,11 +185,5 @@ public class Edit extends JFrame {
 		getContentPane().add(btnUpdate);
 		
 	}
-	
-	public static void main(String args[])
-	{
-		Edit editScreen = new Edit("luke", "hamer", "gfdgdfg@fdgdfg.com");
-		editScreen.setVisible(true);
 
-	}
 }
