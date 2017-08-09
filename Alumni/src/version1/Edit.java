@@ -17,7 +17,9 @@ public class Edit extends JFrame {
 	private JTextField textField_LN;
 	private JTextField textField_Email;
 	private JTextField textField_CheckEmail;
-	//Boolean for checking is all fields have passed the constraints
+	private static final String URL = "127.0.0.1";
+	private static final String USER = "AlumniAdmin";
+	private static final String PASSWORD = "WelTec123";
 	private boolean constraintsBool = true;
 	public Edit(String firstName, String lastName, String email ) {
 		setMinimumSize(new Dimension(450, 300));
