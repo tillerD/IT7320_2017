@@ -182,9 +182,6 @@ public class Edit extends JFrame {
 					constraintsBool = true;
 					btnUpdate.setEnabled(true);
 				} else {
-//<<<<<<< HEAD
-					//View viewScreen = new View(true);
-//=======
 					String query = "UPDATE alumnischema.students SET firstName = " + textField_FN.getText() + ", LastName = " + textField_LN.getText() + ", Email = " + textField_Email.getText() + " WHERE StudentID = id";
 					Connection connection = null;
 					try {
@@ -197,7 +194,6 @@ public class Edit extends JFrame {
 					}
 							
 					View viewScreen = new View(false);
-//>>>>>>> branch 'master' of https://github.com/tillerD/IT7320_2017.git
 					viewScreen.setVisible(true);
 					dispose();
 				}
