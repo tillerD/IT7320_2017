@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JButton;
@@ -181,13 +182,16 @@ public class Edit extends JFrame {
 					constraintsBool = true;
 					btnUpdate.setEnabled(true);
 				} else {
-				/*	String query = "UPDATE students "
-							+ "SET firstname = textField_FN.getText(), lastname = textField_LN.getText(), email = textField_Email.getText() "
-							+ "WHERE studentid = id";
+					String query = "UPDATE alumnischema.students SET firstName = " + textField_FN.getText() + ", LastName = " + textField_LN.getText() + ", Email = " + textField_Email.getText() + " WHERE StudentID = id";
 					Connection connection = null;
+					try {
 						connection = DriverManager.getConnection(URL, USER, PASSWORD);
 						Statement statement = connection.createStatement();
-						statement.executeQuery(query);*/
+						statement.executeQuery(query);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 							
 					View viewScreen = new View(false);
 					viewScreen.setVisible(true);
