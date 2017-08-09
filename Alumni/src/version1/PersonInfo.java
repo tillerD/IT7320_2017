@@ -4,7 +4,7 @@ public class PersonInfo {
 	private int idStudent;
 	private String firstName;
 	private String lastName;
-	private String id;
+	private int id;
 	private String email;
 	
 	public PersonInfo()
@@ -12,7 +12,7 @@ public class PersonInfo {
 		idStudent = 0;
 		firstName = null;
 		lastName = null;
-		id = null;
+		id = 0;
 		email = null;
 	}
 	
@@ -37,11 +37,11 @@ public class PersonInfo {
 		this.lastName = lastName;
 	}
 	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setId(int i) {
+		this.id = i;
 	}
 	
 	public String getEmail() {
