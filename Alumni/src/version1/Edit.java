@@ -198,11 +198,9 @@ public class Edit extends JFrame {
 					dispose();
 				}
 			}
-		});
-		
+		});	
 		btnUpdate.setBounds(85, 167, 89, 23);
 		getContentPane().add(btnUpdate);
-		
 	}
 
 }
