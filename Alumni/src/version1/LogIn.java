@@ -17,9 +17,10 @@ public class LogIn extends JFrame {
 	private JTextField textUsername;
 	private JTextField textPassword;
 	private boolean admin;
-	private static final String URL = "jdbc:mysql//localhost:3306";
-	private static final String USER = "AlumniAdmin";
-	private static final String PASSWORD = "WelTec123";
+	private static String URL = "jdbc:mysql://localhost:3306/alumnischema";
+	private static String USER = "AlumniAdmin";
+	private static String PASSWORD = "WelTec123";
+	
 	public LogIn() {
 		setMinimumSize(new Dimension(315, 160));
 		setTitle("WelTec Alumni");
@@ -52,7 +53,7 @@ public class LogIn extends JFrame {
 		JButton btnLogin = new JButton("Log In");
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void mouseClicked(MouseEvent arg0) {			
 				String user = textUsername.getText();
 				String password = textPassword.getText();
 				String query = "SELECT admin FROM alumnischema.students WHERE username = " + user + " password = " + password;
