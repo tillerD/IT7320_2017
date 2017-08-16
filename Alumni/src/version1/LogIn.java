@@ -16,7 +16,6 @@ import java.sql.*;
 public class LogIn extends JFrame {
 	private JTextField textUsername;
 	private JTextField textPassword;
-	private boolean admin;
 	private static String URL = "jdbc:mysql://localhost:3306/alumnischema";
 	private static String USER = "AlumniAdmin";
 	private static String PASSWORD = "WelTec123";
@@ -64,13 +63,8 @@ public class LogIn extends JFrame {
 					Statement statement = connection.createStatement();
 					ResultSet result = statement.executeQuery(query);
 					if(result.next())
-					{
-						if(result.getInt("admin") == 1)
-							admin = true;
-						else
-							admin = false;
-					
-						View viewScreen = new View(admin);
+					{					
+						View viewScreen = new View();
 						viewScreen.setVisible(true);
 						dispose();
 					}
@@ -88,6 +82,14 @@ public class LogIn extends JFrame {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} finally {
+					if (connection != null) {
+						try {
+							connection.close();
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+					}
 				}
 			}
 		});

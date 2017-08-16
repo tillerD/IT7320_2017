@@ -25,7 +25,7 @@ public class View extends JFrame {
 	private static final String PASSWORD = "WelTec123";
 	private PersonInfo info = new PersonInfo();
 	private CourseStudied study = new CourseStudied();
-	public View(boolean role) {
+	public View() {
 		
 		setMinimumSize(new Dimension(450, 535));
 		setTitle("WelTec Alumni");

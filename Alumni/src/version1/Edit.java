@@ -1,18 +1,19 @@
 package version1;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import com.mysql.jdbc.PreparedStatement;
+
 import java.awt.Dimension;
 
 @SuppressWarnings("serial")
@@ -64,7 +65,7 @@ public class Edit extends JFrame {
 		getContentPane().add(textField_Email);
 		
 		JLabel label_4 = new JLabel("Confirm Email");
-		label_4.setBounds(10, 114, 77, 14);
+		label_4.setBounds(10, 114, 298, 14);
 		getContentPane().add(label_4);
 		
 		textField_CheckEmail = new JTextField();
@@ -94,97 +95,102 @@ public class Edit extends JFrame {
 		lblStudentId.setBounds(97, 64, 77, 14);
 		getContentPane().add(lblStudentId);
 		
-		JLabel labelFN = new JLabel("");
-		labelFN.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		labelFN.setForeground(Color.RED);
-		labelFN.setBounds(281, 14, 143, 14);
-		getContentPane().add(labelFN);
-		
-		JLabel labelLN = new JLabel("");
-		labelLN.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		labelLN.setForeground(Color.RED);
-		labelLN.setBounds(283, 39, 141, 14);
-		getContentPane().add(labelLN);
-		
-		JLabel label_E = new JLabel("");
-		label_E.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		label_E.setForeground(Color.RED);
-		label_E.setBounds(283, 89, 141, 14);
-		getContentPane().add(label_E);
-		
-		JLabel label_CE = new JLabel("");
-		label_CE.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		label_CE.setForeground(Color.RED);
-		label_CE.setBounds(283, 114, 141, 14);
-		getContentPane().add(label_CE);
-		
-		JLabel label_Update = new JLabel("");
-		label_Update.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		label_Update.setForeground(Color.RED);
-		label_Update.setBounds(10, 201, 263, 14);
-		getContentPane().add(label_Update);
-		
 		JButton btnUpdate = new JButton("Update");
 		btnUpdate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				btnUpdate.setEnabled(false);
+				boolean warning = false;
 				
-				// checks first name is between 1-40 chars and is not null
-				if (textField_FN.getText().length() >= 40) {
-					textField_FN.setText(info.getFirstName());
-					labelFN.setText("First Name must be no longer than 40 characters");
-					constraintsBool = false;
-				} else if ((textField_FN.getText().length() == 0)) {
-					textField_FN.setText(info.getFirstName());
-					labelFN.setText("First Name field must not be empty");
-					constraintsBool = false;
+				if(warning == false)
+				{
+					// checks first name is between 1-40 chars and is not null
+					if (textField_FN.getText().length() >= 40) {
+						textField_FN.setText(info.getFirstName());
+						JOptionPane.showMessageDialog(new JFrame(), "First Name must be no longer than 40 characters!", "Check Input", JOptionPane.ERROR_MESSAGE);
+						constraintsBool = false;
+						warning = true;
+					} else if ((textField_FN.getText().length() == 0)) {
+						textField_FN.setText(info.getFirstName());
+						JOptionPane.showMessageDialog(new JFrame(), "First Name must not be empty!", "Check Input", JOptionPane.ERROR_MESSAGE);
+						constraintsBool = false;
+						warning = true;
+					}
 				}
-
-				// checks last name is between 1-40 chars and is not null
-				if (textField_LN.getText().length() >= 40) {
-					textField_LN.setText(info.getLastName());
-					labelLN.setText("Last Name must be no longer than 40 characters");
-					constraintsBool = false;
-				} else if ((textField_LN.getText().length() == 0)) {
-					textField_LN.setText(info.getLastName());
-					labelLN.setText("Last Name field must not be empty");
-					constraintsBool = false;
+				
+				if(warning == false)
+				{
+					// checks last name is between 1-40 chars and is not null
+					if (textField_LN.getText().length() >= 40) {
+						textField_LN.setText(info.getLastName());
+						JOptionPane.showMessageDialog(new JFrame(), "Last Name must be no longer than 40 characters!", "Check Input", JOptionPane.ERROR_MESSAGE);
+						constraintsBool = false;
+						warning = true;
+					} else if ((textField_LN.getText().length() == 0)) {
+						textField_LN.setText(info.getLastName());
+						JOptionPane.showMessageDialog(new JFrame(), "Last Name must not be empty!", "Check Input", JOptionPane.ERROR_MESSAGE);
+						constraintsBool = false;
+						warning = true;
+					}
 				}
-
-				// Checks emails match, meet constraints and is non null
-				if (textField_Email.getText().length() >= 40) {
-					textField_Email.setText(info.getEmail());
-					label_E.setText("Email must be no longer than 40 characters");
-					constraintsBool = false;
-				} else if ((textField_Email.getText().length() == 0)) {
-					textField_Email.setText(info.getEmail());
-					label_E.setText("Email field must not be empty");
-					constraintsBool = false;
-				} else if (!(textField_Email.getText().equals(textField_CheckEmail.getText()))) {
-					textField_CheckEmail.setText(info.getEmail());
-					label_CE.setText("Emails do not match");
-					constraintsBool = false;
+				
+				if(warning == false)
+				{
+					// Checks emails match, meet constraints and is non null
+					if (textField_Email.getText().length() >= 40) {
+						textField_Email.setText(info.getEmail());
+						JOptionPane.showMessageDialog(new JFrame(), "Email must be no longer than 40 characters!", "Check Input", JOptionPane.ERROR_MESSAGE);
+						constraintsBool = false;
+						warning = true;
+					} else if ((textField_Email.getText().length() == 0)) {
+						textField_Email.setText(info.getEmail());
+						JOptionPane.showMessageDialog(new JFrame(), "Email must not be empty!", "Check Input", JOptionPane.ERROR_MESSAGE);
+						constraintsBool = false;
+						warning = true;
+					} else if (!(textField_Email.getText().equals(textField_CheckEmail.getText()))) {
+						textField_CheckEmail.setText(info.getEmail());
+						JOptionPane.showMessageDialog(new JFrame(), "Emails do not match!", "Check Input", JOptionPane.ERROR_MESSAGE);
+						constraintsBool = false;
+						warning = true;
+					}
 				}
+				
 				
 				//Checks if all constraints are met and updates if correct
 				if (constraintsBool == false) {
-					label_Update.setText("Please check your details are correct before updating");
+					JOptionPane.showMessageDialog(new JFrame(), "Please check your details are correct before updating", "Check Input", JOptionPane.ERROR_MESSAGE);
+					textField_FN.setText(info.getFirstName()); 
+					textField_LN.setText(info.getLastName());
+					textField_Email.setText(info.getEmail());
+					textField_CheckEmail.setText(info.getEmail());
 					constraintsBool = true;
 					btnUpdate.setEnabled(true);
 				} else {
-					String query = "UPDATE alumnischema.students SET firstName = " + textField_FN.getText() + ", LastName = " + textField_LN.getText() + ", Email = " + textField_Email.getText() + " WHERE StudentID = id";
+					String query = "UPDATE alumnischema.students SET firstName = '" + textField_FN.getText() + 
+							"' , LastName = '" + textField_LN.getText() + 
+							"', Email = '" + textField_Email.getText() + 
+							"' WHERE idStudents = " + info.getIdStudent() + ";";
 					Connection connection = null;
 					try {
 						connection = DriverManager.getConnection(URL, USER, PASSWORD);
-						Statement statement = connection.createStatement();
-						statement.executeQuery(query);
+						PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query);
+						pstmt.executeUpdate();
+						pstmt.close();
+						JOptionPane.showMessageDialog(new JFrame(), "Update Complete!", "Updated Database", JOptionPane.ERROR_MESSAGE);
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+					} finally {
+						if (connection != null) {
+							try {
+								connection.close();
+							} catch (SQLException e1) {
+								e1.printStackTrace();
+							}
+						}
 					}
 							
-					View viewScreen = new View(false);
+					View viewScreen = new View();
 					viewScreen.setVisible(true);
 					dispose();
 				}
