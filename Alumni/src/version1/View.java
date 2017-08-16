@@ -23,6 +23,8 @@ public class View extends JFrame {
 	private static String URL = "jdbc:mysql://localhost:3306/alumnischema";
 	private static final String USER = "AlumniAdmin";
 	private static final String PASSWORD = "WelTec123";
+	private PersonInfo info = new PersonInfo();
+	private CourseStudied study = new CourseStudied();
 	public View(boolean role) {
 		
 		setMinimumSize(new Dimension(450, 535));
@@ -69,7 +71,6 @@ public class View extends JFrame {
 							ResultSet rs = statement.executeQuery(query);
 							if(rs.next())
 							{
-								PersonInfo info = new PersonInfo();
 								info.setIdStudent(rs.getInt("idStudents"));
 								info.setFirstName(rs.getString("firstname"));
 								info.setLastName(rs.getString("lastname"));
@@ -84,7 +85,6 @@ public class View extends JFrame {
 								ResultSet rs2 = statement2.executeQuery(query2);
 								while(rs2.next())
 								{
-									CourseStudied study = new CourseStudied();
 									study.setName(rs2.getString("Name"));
 									study.setMajor(rs2.getString("Major"));
 									study.setDescription(rs2.getString("Description"));
@@ -137,8 +137,16 @@ public class View extends JFrame {
 		getContentPane().add(btnSearch);
 		
 		JButton btnEditStudentDetails = new JButton("Edit Student Details");
+		btnEditStudentDetails.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				Edit editScreen = new Edit(info, study);
+				editScreen.setVisible(true);
+				dispose();
+			}
+		});
 		btnEditStudentDetails.setVisible(true);
-		btnEditStudentDetails.setBounds(286, 465, 141, 23);
+		btnEditStudentDetails.setBounds(228, 465, 199, 23);
 		getContentPane().add(btnEditStudentDetails);
 		
 		summary  = new JTextArea();

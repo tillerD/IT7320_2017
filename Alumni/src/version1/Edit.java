@@ -21,13 +21,13 @@ public class Edit extends JFrame {
 	private JTextField textField_LN;
 	private JTextField textField_Email;
 	private JTextField textField_CheckEmail;
-	private static final String URL = "127.0.0.1";
+	private static String URL = "jdbc:mysql://localhost:3306/alumnischema";
 	private static final String USER = "AlumniAdmin";
 	private static final String PASSWORD = "WelTec123";
 	private boolean constraintsBool = true;
 	
-	public Edit(String firstName, String lastName, String id, String email ) {
-		setMinimumSize(new Dimension(450, 300));
+	public Edit(PersonInfo info, CourseStudied study) {
+		setMinimumSize(new Dimension(315, 225));
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 11));
 		setTitle("WelTec Alumni");
 		getContentPane().setLayout(null);
@@ -72,17 +72,13 @@ public class Edit extends JFrame {
 		textField_CheckEmail.setBounds(97, 111, 176, 20);
 		getContentPane().add(textField_CheckEmail);
 		
-		textField_FN.setText(firstName); 
-		textField_LN.setText(lastName);
-		textField_Email.setText(email);
-		textField_CheckEmail.setText(email);
-		
-		JLabel label_5 = new JLabel("Studied");
-		label_5.setBounds(10, 139, 46, 14);
-		getContentPane().add(label_5);
+		textField_FN.setText(info.getFirstName()); 
+		textField_LN.setText(info.getLastName());
+		textField_Email.setText(info.getEmail());
+		textField_CheckEmail.setText(info.getEmail());
 		
 		JButton button_1 = new JButton("Clear");
-		button_1.setBounds(184, 167, 89, 23);
+		button_1.setBounds(184, 142, 89, 23);
 		getContentPane().add(button_1);
 		button_1.addMouseListener(new MouseAdapter() {
 			@Override
@@ -94,11 +90,7 @@ public class Edit extends JFrame {
 			}
 		});
 		
-		JLabel lblDegree = new JLabel("Degree");
-		lblDegree.setBounds(97, 142, 46, 14);
-		getContentPane().add(lblDegree);
-		
-		JLabel lblStudentId = new JLabel("Student ID");
+		JLabel lblStudentId = new JLabel(String.valueOf(info.getId()));
 		lblStudentId.setBounds(97, 64, 77, 14);
 		getContentPane().add(lblStudentId);
 		
@@ -140,37 +132,37 @@ public class Edit extends JFrame {
 				
 				// checks first name is between 1-40 chars and is not null
 				if (textField_FN.getText().length() >= 40) {
-					textField_FN.setText(firstName);
+					textField_FN.setText(info.getFirstName());
 					labelFN.setText("First Name must be no longer than 40 characters");
 					constraintsBool = false;
 				} else if ((textField_FN.getText().length() == 0)) {
-					textField_FN.setText(firstName);
+					textField_FN.setText(info.getFirstName());
 					labelFN.setText("First Name field must not be empty");
 					constraintsBool = false;
 				}
 
 				// checks last name is between 1-40 chars and is not null
 				if (textField_LN.getText().length() >= 40) {
-					textField_LN.setText(lastName);
+					textField_LN.setText(info.getLastName());
 					labelLN.setText("Last Name must be no longer than 40 characters");
 					constraintsBool = false;
 				} else if ((textField_LN.getText().length() == 0)) {
-					textField_LN.setText(lastName);
+					textField_LN.setText(info.getLastName());
 					labelLN.setText("Last Name field must not be empty");
 					constraintsBool = false;
 				}
 
 				// Checks emails match, meet constraints and is non null
 				if (textField_Email.getText().length() >= 40) {
-					textField_Email.setText(email);
+					textField_Email.setText(info.getEmail());
 					label_E.setText("Email must be no longer than 40 characters");
 					constraintsBool = false;
 				} else if ((textField_Email.getText().length() == 0)) {
-					textField_Email.setText(email);
+					textField_Email.setText(info.getEmail());
 					label_E.setText("Email field must not be empty");
 					constraintsBool = false;
 				} else if (!(textField_Email.getText().equals(textField_CheckEmail.getText()))) {
-					textField_CheckEmail.setText(email);
+					textField_CheckEmail.setText(info.getEmail());
 					label_CE.setText("Emails do not match");
 					constraintsBool = false;
 				}
@@ -198,8 +190,7 @@ public class Edit extends JFrame {
 				}
 			}
 		});	
-		btnUpdate.setBounds(85, 167, 89, 23);
+		btnUpdate.setBounds(85, 142, 89, 23);
 		getContentPane().add(btnUpdate);
 	}
-
 }
