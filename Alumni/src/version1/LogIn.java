@@ -2,6 +2,7 @@ package version1;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
@@ -10,7 +11,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Color;
 import java.sql.*;
-import javax.sql.*;
 
 @SuppressWarnings("serial")
 public class LogIn extends JFrame {
@@ -22,7 +22,7 @@ public class LogIn extends JFrame {
 	private static String PASSWORD = "WelTec123";
 	
 	public LogIn() {
-		setMinimumSize(new Dimension(315, 160));
+		setMinimumSize(new Dimension(315, 155));
 		setTitle("WelTec Alumni");
 		getContentPane().setLayout(null);
 		
@@ -31,17 +31,17 @@ public class LogIn extends JFrame {
 		getContentPane().add(lblUsername);
 		
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(10, 48, 46, 14);
+		lblPassword.setBounds(10, 48, 74, 14);
 		getContentPane().add(lblPassword);
 		
 		textUsername = new JTextField();
-		textUsername.setBounds(77, 14, 194, 20);
+		textUsername.setBounds(94, 14, 194, 20);
 		getContentPane().add(textUsername);
 		textUsername.setColumns(10);
 		
 		textPassword = new JTextField();
 		textPassword.setColumns(10);
-		textPassword.setBounds(77, 45, 194, 20);
+		textPassword.setBounds(94, 48, 194, 20);
 		getContentPane().add(textPassword);
 		
 		JLabel label_login = new JLabel("");
@@ -56,7 +56,8 @@ public class LogIn extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {			
 				String user = textUsername.getText();
 				String password = textPassword.getText();
-				String query = "SELECT admin FROM alumnischema.students WHERE username = " + user + " password = " + password;
+				//String queryTest = "SELECT admin FROM alumnischema.students WHERE username = 'dylan.tiller' AND password = 'testing123';";
+				String query = "SELECT admin FROM alumnischema.students WHERE username = '" + user + "' AND password = '" + password + "';";
 				Connection connection = null;
 				try {
 					connection = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -75,7 +76,7 @@ public class LogIn extends JFrame {
 					}
 					else
 					{
-						label_login.setText("Username or password is incorrect");
+						JOptionPane.showMessageDialog(null, "Username and/or Password are incorrect!", "Login Error", JOptionPane.ERROR_MESSAGE);
 					}
 					statement.close();
 				} catch (SQLException e1) {
@@ -90,7 +91,7 @@ public class LogIn extends JFrame {
 				}
 			}
 		});
-		btnLogin.setBounds(83, 76, 89, 23);
+		btnLogin.setBounds(10, 79, 89, 23);
 		getContentPane().add(btnLogin);
 		
 		JButton btnSignUp = new JButton("Sign Up");
@@ -102,7 +103,7 @@ public class LogIn extends JFrame {
 				dispose();
 			}
 		});
-		btnSignUp.setBounds(182, 76, 89, 23);
+		btnSignUp.setBounds(199, 79, 89, 23);
 		getContentPane().add(btnSignUp);
 		
 

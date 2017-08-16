@@ -13,18 +13,17 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JTextArea;
 
 @SuppressWarnings("serial")
 public class View extends JFrame {
 	private JTextField nameField;
 	private JTextField idField;
-	private JTextField summary;
-	private boolean admin;
-	private static final String URL = "127.0.0.1";
+	JTextArea summary;
+	private static String URL = "jdbc:mysql://localhost:3306/alumnischema";
 	private static final String USER = "AlumniAdmin";
 	private static final String PASSWORD = "WelTec123";
 	public View(boolean role) {
-		this.admin = role;
 		
 		setMinimumSize(new Dimension(450, 535));
 		setTitle("WelTec Alumni");
@@ -48,11 +47,6 @@ public class View extends JFrame {
 		getContentPane().add(idField);
 		idField.setColumns(10);
 		
-		summary = new JTextField();
-		summary.setBounds(10, 89, 417, 337);
-		getContentPane().add(summary);
-		summary.setColumns(10);
-		
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addMouseListener(new MouseAdapter() {
 			@Override
@@ -66,8 +60,9 @@ public class View extends JFrame {
 					String id = idField.getText();
 					if(fieldChecker(fName) && fieldChecker(lName) && fieldChecker(id))
 					{
-						String query = "SELECT * FROM students WHERE studentid = " + id + " AND firstname = " + fName + " AND lastname = " + lName;
+						String query = "SELECT * FROM alumnischema.students WHERE studentid = '" + id + "' AND firstname = '" + fName + "' AND lastname = '" + lName + "';";
 						Connection connection = null;
+						Connection connection2 = null;
 						try {
 							connection = DriverManager.getConnection(URL, USER, PASSWORD);
 							Statement statement = connection.createStatement();
@@ -80,9 +75,33 @@ public class View extends JFrame {
 								info.setLastName(rs.getString("lastname"));
 								info.setId(rs.getInt("StudentID"));
 								info.setEmail(rs.getString("email"));
+								
+								summary.setText(displayText(info));
+								
+								String query2 = "SELECT * FROM alumnischema.studies, alumnischema.stustu WHERE stustu.idStudents = " + info.getIdStudent() + " AND studies.idStudies = stustu.idStudies;";
+								connection2 = DriverManager.getConnection(URL, USER, PASSWORD);
+								Statement statement2 = connection2.createStatement();
+								ResultSet rs2 = statement2.executeQuery(query2);
+								while(rs2.next())
+								{
+									CourseStudied study = new CourseStudied();
+									study.setName(rs2.getString("Name"));
+									study.setMajor(rs2.getString("Major"));
+									study.setDescription(rs2.getString("Description"));
+									
+									String text = summary.getText();
+									text += addText(study);
+									summary.setText(text);
+								}
+							}
+							else
+							{
+								summary.setText("");
+								JOptionPane.showMessageDialog(null, "Name and Student ID combination is incorrect!", "Search Error", JOptionPane.ERROR_MESSAGE);
 							}
 						} catch (SQLException e1) {
-							//TODO Auto-generated catch block
+							summary.setText("");
+							JOptionPane.showMessageDialog(null, "Name and Student ID combination is incorrect!", "Search Error", JOptionPane.ERROR_MESSAGE);
 							e1.printStackTrace();
 						} finally {
 							if (connection != null) {
@@ -94,38 +113,37 @@ public class View extends JFrame {
 							}
 						}
 					}
-					else
-					{
-						nameField.setText("");
-						idField.setText("");
-						JOptionPane.showMessageDialog(new JFrame(), "Invalid input!", "Dialog", JOptionPane.ERROR_MESSAGE);
-					}
 				}
+				else
+				{
+					nameField.setText("");
+					idField.setText("");
+					JOptionPane.showMessageDialog(new JFrame(), "Invalid input!", "Check Input", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+
+			private String addText(CourseStudied study) {
+				String display = "\n\nCourse Name: " + study.getName() + "\nMajor: " + study.getMajor() + "\nDescription: " + study.getDescription();
+				return display;
+			}
+
+			private String displayText(PersonInfo info) {
+				String display = "First Name: " + info.getFirstName() + "\nLast Name: " + info.getLastName() +
+						"\nStudent ID: " + info.getId() + "\nEmail: " + info.getEmail();
+				return display;
 			}
 		});
 		btnSearch.setBounds(338, 55, 89, 23);
 		getContentPane().add(btnSearch);
 		
-		JButton btnEditMyDetails = new JButton("Edit My Details");
-		btnEditMyDetails.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-			}
-		});
-		btnEditMyDetails.setBounds(10, 465, 111, 23);
-		getContentPane().add(btnEditMyDetails);
-		
 		JButton btnEditStudentDetails = new JButton("Edit Student Details");
-		btnEditStudentDetails.setVisible(false);
+		btnEditStudentDetails.setVisible(true);
 		btnEditStudentDetails.setBounds(286, 465, 141, 23);
 		getContentPane().add(btnEditStudentDetails);
 		
-		if(admin)
-		{
-			btnEditMyDetails.setVisible(false);
-			btnEditStudentDetails.setVisible(true);
-		}
+		summary  = new JTextArea();
+		summary.setBounds(10, 94, 417, 360);
+		getContentPane().add(summary);
 	}
 	
 	private boolean fieldChecker(String text)
@@ -136,5 +154,4 @@ public class View extends JFrame {
 		}
 		return false;
 	}
-
 }
